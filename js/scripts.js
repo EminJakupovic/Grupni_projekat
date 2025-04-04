@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     <div class="pos-profile-info-edit">
-                        <h3>Amar Hadžić</h3>
-                        <p>Učenik, 4-B</p>
+                        <h3>Emin Jakupović</h3>
+                        <p>Učenik, IX-3</p>
                     </div>
                 </div>
                 
@@ -295,15 +295,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="pos-settings-tab-content active" id="personal-tab">
                     <div class="pos-form-group">
                         <label>Ime</label>
-                        <input type="text" value="Amar">
+                        <input type="text" value="Emin">
                     </div>
                     <div class="pos-form-group">
                         <label>Prezime</label>
-                        <input type="text" value="Hadžić">
+                        <input type="text" value="Jakupović">
                     </div>
                     <div class="pos-form-group">
                         <label>Email</label>
-                        <input type="email" value="amar.hadzic@skola.edu">
+                        <input type="email" value="emin.jakupovic@osbs.edu">
                     </div>
                     <div class="pos-form-group">
                         <label>Telefon</label>
