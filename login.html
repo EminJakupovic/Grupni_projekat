@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/login.css">
+    <title>EduSphere | Sign In</title>
+    <link rel="icon" type="image/png" href="slike/logo-removebg.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+</head>
+<body>
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <p>EduSphere</p>
+        </div>
+       
+        <div class="nav-button">
+            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+        </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav>
+ 
+    <div class="form-box">
+        
+        <!------------------- Login dio -------------------------->
+
+        <div class="login-container" id="login">
+            <div class="top">
+                <header>Login</header>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Username or Email">
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <a href="index.html"><input type="submit" class="submit" value="Sign In"></a>
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="login-check">
+                    <label for="login-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Forgot password?</a></label>
+                </div>
+            </div>
+        </div>
+
+        <!------------------- SignUp dio -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Korisničko Ime">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <style>
+                    #schoolSelect {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        background: rgba(255, 255, 255, 0.2);
+                        color: #fff;
+                        box-sizing: border-box;
+                    }
+
+                    .select2-container--default .select2-selection--single {
+                        font-size: 15px;
+                        color: #fff;
+                        background: rgba(255, 255, 255, 0.2);
+                        height: 50px;
+                        width: 100%;
+                        padding: 0 10px 0 45px;
+                        border: none;
+                        border-radius: 30px;
+                        outline: none;
+                        transition: .2s ease;
+                    }
+
+                    .select2-container--default .select2-selection--single .select2-selection__arrow {
+                        height: 100%;
+                        right: 10px;
+                        color: white;
+                    }
+
+                    .school-icon {
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 10px;
+                        vertical-align: middle;
+                    }
+                </style>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <select class="input-field" id="schoolSelect">
+                    <option value="" disabled selected>Select School</option>
+                    <option value="school1" data-image="slike/logo-hi-rez-removebg-preview.png">OS Behaudin Selmanović</option>
+                    <option value="school2" data-image="slike/energetska.png">ETS Za Energetiku Sarajevo</option>
+                    <option value="school3" data-image="slike/osmannuri.jpg">OS Osman Nuri Hadžić</option>
+                </select>
+                <i class="bx bx-building"></i>
+            </div>
+        </div>
+            <div class="input-box">
+                <a href="index.html"><input type="submit" class="submit" value="Register"></a>
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Terms & conditions</a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+ 
+<!------------------------JavaScript------------------------>
+
+<script>
+   
+   function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+
+    if(i.className === "nav-menu") {
+        i.className += " responsive";
+    } else {
+        i.className = "nav-menu";
+    }
+   }
+ 
+</script>
+
+<script>
+
+    var a = document.getElementById("loginBtn");
+    var b = document.getElementById("registerBtn");
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+
+    function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+
+    function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+    }
+    $(document).ready(function() {
+    $('#schoolSelect').select2({
+        templateResult: function(data) {
+            if (!data.id) {
+                return data.text;
+            }
+            var img = $(data.element).data('image');
+            var text = data.text;
+            return $('<span><img src="' + img + '" class="school-icon" /> ' + text + '</span>');
+        },
+        templateSelection: function(data) {
+            return data.text;
+        }
+    });
+});
+</script>
+
+</body>
+</html>

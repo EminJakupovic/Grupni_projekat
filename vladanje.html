@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vladanje - EduSphere</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --info: #4895ef;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --background: #f0f2f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--dark);
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: #e6e6e6 1px solid;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.621);
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .date-display {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .dashboard-grid {
+            display: flex;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            margin-left: 30px;
+        }
+
+        .card {
+            width: 750px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            gap: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .icon-behavior { background-color: var(--danger); }
+        .icon-attendance { background-color: var(--info); }
+        .icon-feedback { background-color: var(--success); }
+
+        .behavior-meter {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .behavior-level {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .excellent {
+            background: linear-gradient(90deg, #3f37c9, #4361ee);
+            width: 95%;
+        }
+
+        .very-good {
+            background: linear-gradient(90deg, #4361ee, #4895ef);
+            width: 85%;
+        }
+
+        .good {
+            background: linear-gradient(90deg, #4895ef, #4cc9f0);
+            width: 70%;
+        }
+
+        .satisfactory {
+            background: linear-gradient(90deg, #f72585, #e63946);
+            width: 50%;
+        }
+
+        .unsatisfactory {
+            background-color: #e63946;
+            width: 30%;
+        }
+
+        .behavior-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .incident-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .incident-date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .incident-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .incident-description {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .badge-warning {
+            background-color: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        .badge-success {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+        
+        .attendance-chart {
+            display: flex;
+            margin: 20px 0;
+            height: 150px;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .chart-column {
+            width: 15%;
+            background-color: #eee;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .chart-column:hover {
+            transform: scaleY(1.05);
+        }
+        
+        .chart-column::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .chart-label {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .column-present { 
+            height: 90%;
+            background: linear-gradient(0deg, #4cc9f0, #4895ef);
+        }
+        
+        .column-excused { 
+            height: 10%;
+            background: linear-gradient(0deg, #f59e0b, #f1c40f);
+        }
+        
+        .column-absent { 
+            height: 2%;
+            background: linear-gradient(0deg, #e63946, #f72585);
+        }
+        
+        .column-late { 
+            height: 5%;
+            background: linear-gradient(0deg, #f1c40f, #f59e0b);
+        }
+        
+        .column-sick { 
+            height: 8%;
+            background: linear-gradient(0deg, #4895ef, #4cc9f0);
+        }
+        
+        .feedback-item {
+            display: flex;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+        }
+        
+        .teacher-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .feedback-content {
+            flex: 1;
+        }
+        
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .teacher-name {
+            font-weight: 500;
+        }
+        
+        .feedback-date {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .feedback-text {
+            font-size: 13px;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="welcome-message">Vladanje i Disciplina</div>
+        <div class="date-display">Status za školsku godinu 2024/2025</div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Overall Behavior Card -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ocjena Vladanja</div>
+                <div class="card-icon icon-behavior">
+                    <i class="fas fa-user-check"></i>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="behavior-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">Primjerno</div>
+                        <div class="stat-label">Ocjena</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">Ukupno</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Prosjek Razreda</div>
+                    </div>
+                </div>
+
+                
+                <div style="margin-top: 20px; font-weight: 500;">Disciplinski Događaji</div><br>
+                
+                <div class="incident-item">
+                    <div class="incident-date">22.03.2025.</div>
+                    <div class="incident-title">
+                        <span>Kašnjenje na čas</span>
+                        <span class="badge badge-warning">Upozorenje</span>
+                    </div>
+                    <div class="incident-description">Kašnjenje na prvi čas matematike - 5 minuta.</div>
+                </div>
+                
+                <div class="incident-item">
+                    <div class="incident-date">15.02.2025.</div>
+                    <div class="incident-title">
+                        <span>Kašnjenje na čas</span>
+                        <span class="badge badge-warning">Upozorenje</span>
+                    </div>
+                    <div class="incident-description">Kašnjenje na prvi čas matematike - 5 minuta.</div>
+                </div>
+                
+                <div class="incident-item">
+                    <div class="incident-date">10.01.2025.</div>
+                    <div class="incident-title">
+                        <span>Pozitivno isticanje</span>
+                        <span class="badge badge-success">Pohvala</span>
+                    </div>
+                    <div class="incident-description">Pomoć novom učeniku u razredu sa prilagođavanjem.</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Prisustvo na Nastavi</div>
+                <div class="card-icon icon-attendance">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="behavior-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Prisustvo</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Izostanci</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">Kašnjenja</div>
+                    </div>
+                </div>
+                
+            
+                
+                <div style="margin-top: 20px; font-weight: 500;">Nedavni Izostanci</div><br>
+                
+                <div class="incident-item">
+                    <div class="incident-date">25.03.2025.</div>
+                    <div class="incident-title">
+                        <span>Matematika</span>
+                        <span class="badge badge-success">Opravdano</span>
+                    </div>
+                    <div class="incident-description">Školsko takmičenje iz fizike.</div>
+                </div>
+                
+                <div class="incident-item">
+                    <div class="incident-date">18.03.2025.</div>
+                    <div class="incident-title">
+                        <span>Engleski jezik</span>
+                        <span class="badge badge-success">Opravdano</span>
+                    </div>
+                    <div class="incident-description">Odobrenje direktora.</div>
+                </div>
+                <div class="incident-item">
+                    <div class="incident-date">17.03.2025.</div>
+                    <div class="incident-title">
+                        <span>Engleski jezik</span>
+                        <span class="badge badge-success">Opravdano</span>
+                    </div>
+                    <div class="incident-description">Odobrenje direktora.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

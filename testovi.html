@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testovi - EduSphere</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --info: #4895ef;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --background: #f0f2f5;
+            --sidebar-width: 260px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --topbar-height: 60px;
+        }
+
+       
+
+        .main-content {
+            flex: 1;
+            margin-left: 120px;
+            padding: 30px;
+            margin-top: 20px
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: #e6e6e6 1px solid;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.621);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .page-description {
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            background-color: var(--background);
+            outline: none;
+            font-family: var(--font-family);
+        }
+
+        .view-options {
+            display: flex;
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: var(--background);
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .test-card {
+            margin-bottom: 50px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 45px;
+            margin-bottom: 30px;
+        }
+
+        .test-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .test-status {
+            padding: 10px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-upcoming {
+            background-color:  rgb(95, 95, 255)
+        }
+
+        .status-tomorrow {
+            background-color:  rgb(68, 68, 255)
+        }
+
+        .status-next-week {
+            background-color: var(--info);
+        }
+
+        .test-content {
+            padding: 20px;
+        }
+
+        .test-date {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .countdown {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--warning);
+        }
+
+        .test-details {
+            margin-bottom: 15px;
+        }
+
+        .test-subject {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .test-type {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .test-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .test-materials {
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .materials-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .materials-list {
+            list-style-type: none;
+        }
+
+        .materials-list li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .materials-list li i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .test-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn i {
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--background);
+            color: var(--dark);
+        }
+
+        .test-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .test-item-row {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .test-item-row:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .test-item-status {
+            width: 8px;
+            height: 50px;
+            border-radius: 4px;
+            margin-right: 20px;
+        }
+
+        .status-tomorrow-bar {
+            background-color: var(--danger);
+        }
+
+        .status-upcoming-bar {
+            background-color: var(--warning);
+        }
+
+        .status-next-week-bar {
+            background-color: var(--info);
+        }
+
+        .test-item-date {
+            width: 100px;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .test-item-day {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .test-item-full-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .test-item-info {
+            flex: 1;
+        }
+
+        .test-item-subject {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .test-item-type {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .test-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .test-item-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-details {
+            background-color: var(--background);
+            color: var(--dark);
+        }
+
+        .btn-remind {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .page-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .page-item:hover {
+            background-color: var(--background);
+        }
+
+        .page-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .calendar-view {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .calendar-navigation {
+            display: flex;
+            align-items: center;
+        }
+
+        .calendar-nav-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: var(--background);
+            margin: 0 5px;
+        }
+
+        .calendar-month {
+            margin: 0 10px;
+            font-weight: 500;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            padding: 10px;
+        }
+
+        .calendar-day {
+            height: 100px;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: var(--background);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .calendar-day:hover {
+            background-color: #e6e6e6;
+        }
+
+        .calendar-day.current-month {
+            background-color: white;
+            border: 1px solid #eee;
+        }
+
+        .calendar-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        .calendar-day.has-tests {
+            border-left: 4px solid var(--warning);
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .day-event {
+            font-size: 11px;
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--warning);
+            padding: 2px 5px;
+            border-radius: 5px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        #calendar-view {
+            display: none;
+        }
+
+        #grid-view {
+            display: block;
+        }
+
+        #list-view {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .topbar {
+                left: 0;
+            }
+            .toggle-sidebar {
+                display: flex;
+            }
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            .filters {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .filter-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .view-options {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Toggle sidebar button */
+        .toggle-sidebar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+ 
+
+        <!-- Main Content -->        <div class="main-content">
+            <div class="page-header">
+                <div class="page-title">Pregled testova</div>
+                <div class="page-description">Pregled svih nadolazećih testova i ispita. Pratite vaše testove, pripremite se na vrijeme i ostvarite izvanredne rezultate!</div>
+            </div>
+
+
+
+
+            <div id="grid-view" class="test-grid">
+
+                <div class="test-card">
+                    <div class="test-status status-tomorrow">Test je sutra!</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">01.04.2025. (utorak)</div>
+                            <div class="countdown">za 1 dan</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Hemija</div>
+                            <div class="test-type">Kontrolni test</div>
+                            <div class="test-description">
+                                Test obuhvata poglavlje 5: Organska hemija. Glavni fokus je na nomenklatura organskih spojeva, alkani, alkeni i alkini.
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, stranice 78-95</li>
+                                <li><i class="fas fa-file-alt"></i> Bilješke sa predavanja</li>
+                                <li><i class="fas fa-flask"></i> Laboratorijske vježbe</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-status status-upcoming">Nadolazeći test</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">03.04.2025. (četvrtak)</div>
+                            <div class="countdown">za 3 dana</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Engleski jezik</div>
+                            <div class="test-type">Pismeni rad</div>
+                            <div class="test-description">
+                                Esej na temu "Modern Technology". Potrebno je napisati između 250-300 riječi, obraditi prednosti i nedostatke modernih tehnologija.
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, Unit 5</li>
+                                <li><i class="fas fa-file-alt"></i> Primjeri eseja</li>
+                                <li><i class="fas fa-language"></i> Vokabular vezan za tehnologiju</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-status status-upcoming">Nadolazeći test</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">10.04.2025. (četvrtak)</div>
+                            <div class="countdown">za 6 dana</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Njemački jezik</div>
+                            <div class="test-type">Kontrolni rad</div>
+                            <div class="test-description">
+                                "Wenn" i "Das", prepozicije, glagolska vremena
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, Unit 5</li>
+                                <li><i class="fas fa-file-alt"></i> Primjeri eseja</li>
+                                <li><i class="fas fa-language"></i> Vokabular vezan za tehnologiju</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-status status-upcoming">Nadolazeći test</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">10.04.2025. (četvrtak)</div>
+                            <div class="countdown">za 6 dana</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Matematika</div>
+                            <div class="test-type">Kontrolni rad</div>
+                            <div class="test-description">
+                               Površina, zapremina pravilne trostrane, četverostrane, šestostrane piramide
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik</li>
+                                <li><i class="fas fa-file-alt"></i> Webstranica "Matematika KS"</li>
+                                <li><i class="fas fa-language"></i> Prazna linija</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-status status-upcoming">Nadolazeći test</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">10.04.2025. (četvrtak)</div>
+                            <div class="countdown">za 5 dana</div>
+                        </div>
+
+
+                        <div class="test-details">
+                            <div class="test-subject">Historija
+                            </div>
+                            <div class="test-type">Pismeni rad</div>
+                            <div class="test-description">
+                                Drugi svjetski rat, položaj BiH u drugom svjetskom ratu
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, Strana 106-133</li>
+                                <li><i class="fas fa-file-alt"></i> Drugi svjetski rat, Kraljevina SHS, Partizanski</li>
+                                <li><i class="fas fa-language"></i> Vokabular vezan za tehnologiju</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                <div class="test-card">
+                    <div class="test-status status-upcoming">Nadolazeći test</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">07.04.2025. (četvrtak)</div>
+                            <div class="countdown">za 7 dana</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Fizika</div>
+                            <div class="test-type">Test</div>
+                            <div class="test-description">
+                            <li><i class="fas fa-language"></i>Elektromagneti i magnetska polja</li>   
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, str.140</li>
+                                <li><i class="fas fa-file-alt"></i> Kako rade magneti</li>
+                                <li><i class="fas fa-language"></i> Vokabular vezan za fiziku</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="test-card">
+                    <div class="test-status status-next-week">Sljedeća sedmica</div>
+                    <div class="test-content">
+                        <div class="test-date">
+                            <div class="date">14.04.2025. (ponedjeljak)</div>
+                            <div class="countdown">za 10 dana</div>
+                        </div>
+                        <div class="test-details">
+                            <div class="test-subject">Matematika</div>
+                            <div class="test-type">Pismeni rad</div>
+                            <div class="test-description">
+                                Test obuhvata integrali i izvodi. Sadržaj pokriva osnovna pravila deriviranja, integriranja i primjene integrala u zadacima.
+                            </div>
+                        </div>
+                        <div class="test-materials">
+                            <div class="materials-title">Materijali za pripremu:</div>
+                            <ul class="materials-list">
+                                <li><i class="fas fa-book"></i> Udžbenik, poglavlje 7 i 8</li>
+                                <li><i class="fas fa-file-alt"></i> Svi primjeri sa vježbi</li>
+                                <li><i class="fas fa-calculator"></i> Zadaci sa prethodnih testova</li>
+                            </ul>
+                        </div>
+                        <div class="test-actions">
+                            <div class="action-btn btn-secondary">
+                                <i class="fas fa-bell"></i> Podsjeti me
+                            </div>
+                            <div class="action-btn btn-primary">
+                                <i class="fas fa-eye"></i> Detalji
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

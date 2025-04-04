@@ -1,0 +1,374 @@
+/* Settings Modal Styles */
+.pos-settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.pos-settings-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body.pos-modal-open {
+    overflow: hidden;
+}
+
+.pos-settings-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.pos-settings-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.pos-settings-modal.active .pos-settings-modal-container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.pos-settings-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pos-settings-modal-header h2 {
+    color: var(--primary);
+    margin: 0;
+    font-size: 22px;
+}
+
+.pos-settings-modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.pos-settings-modal-close:hover {
+    background-color: #f0f0f0;
+}
+
+.pos-settings-modal-content {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Profile Section */
+.pos-settings-profile-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.pos-profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    position: relative;
+    font-size: 30px;
+}
+
+.pos-change-picture {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.pos-change-picture:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.pos-profile-info-edit h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+}
+
+.pos-profile-info-edit p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Tabs */
+.pos-settings-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.pos-settings-tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.pos-settings-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+.pos-settings-tab:hover:not(.active) {
+    background-color: #f5f5f5;
+}
+
+.pos-settings-tab-content {
+    display: none;
+}
+
+.pos-settings-tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Form Elements */
+.pos-form-group {
+    margin-bottom: 15px;
+}
+
+.pos-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.pos-form-group input, .pos-form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.pos-form-group input:focus, .pos-form-group select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+/* Toggle Switch */
+.pos-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.pos-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.pos-toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: 0.3s;
+}
+
+.pos-toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.pos-toggle-switch input:checked + label {
+    background-color: var(--primary);
+}
+
+.pos-toggle-switch input:checked + label:before {
+    transform: translateX(26px);
+}
+
+/* Notification Options */
+.pos-notification-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.pos-notification-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.pos-notification-info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Button Styles */
+.pos-settings-button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.pos-btn-cancel, .pos-btn-save {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pos-btn-cancel {
+    background-color: #f0f0f0;
+    color: #666;
+    margin-right: 10px;
+}
+
+.pos-btn-save {
+    background-color: var(--primary);
+    color: white;
+}
+
+.pos-btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.pos-btn-save:hover {
+    background-color: var(--secondary);
+}
+
+/* Success Message */
+.pos-settings-save-success {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(46, 204, 113, 0.9);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInOut 2s ease;
+}
+
+.pos-settings-save-success i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pos-settings-modal-container {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .pos-settings-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .pos-settings-tab {
+        flex: 1 0 40%;
+        text-align: center;
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+    
+    .pos-profile-picture {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+    }
+    
+    .pos-change-picture {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+}

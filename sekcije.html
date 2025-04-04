@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vannastavne Aktivnosti - EduSphere</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .activity-grid {
+            display: flex;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 520px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        .activity-banner {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .activity-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .activity-banner span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .activity-content {
+            padding: 20px;
+        }
+        
+        .activity-details {
+            margin-bottom: 15px;
+        }
+        
+        .activity-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .activity-detail i {
+            width: 20px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .activity-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .activity-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .activity-button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .activity-button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .activity-button.secondary {
+            background-color: var(--background);
+            color: var(--dark);
+        }
+        
+        .activity-button.secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .activity-button i {
+            margin-right: 8px;
+        }
+        
+        .activity-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .activity-stat {
+            text-align: center;
+        }
+        
+        .activity-stat-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .activity-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .activity-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .search-activities {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-activities input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .search-activities i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .my-activities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .view-button {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background-color: white;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-button:hover, .view-button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+   
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <div class="welcome-message">Vannastavne aktivnosti</div>
+                <div class="date-display">Petak, 04. april 2025.</div>
+            </div>
+
+            <!-- My Activities Section -->
+            <div class="my-activities-header">
+                <div class="section-title">Moje aktivnosti</div>
+                <div class="view-toggle">
+                    <div class="view-button active">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-grid">
+                <!-- Activity Card 1 -->
+                <div class="activity-card">
+                    <div class="activity-banner" style="background-image: url(https://tryengineering.org/wp-content/uploads/bigstock-208614778-768x512.jpg);">
+                        <span><i class="fas fa-chess"></i> Šahovski klub</span>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-details">
+                            <div class="activity-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Utorak & Četvrtak, 15:30-17:00</span>
+                            </div>
+                            <div class="activity-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Učionica 15B</span>
+                            </div>
+                        </div>
+                        <div class="activity-description">
+                            Šahovski klub okuplja učenike svih uzrasta koji su zainteresovani za razvoj logičkog mišljenja i strategije. Redovno organizujemo školska i međuškolska takmičenja.
+                        </div>
+                        <div class="activity-actions">
+                            <button class="activity-button">
+                                <i class="fas fa-info-circle"></i> Detalji
+                            </button>
+                        </div>
+                        <br><br><br>
+                    </div>
+                    <div class="activity-stats">
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">23</div>
+                            <div class="activity-stat-label">Članova</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">86%</div>
+                            <div class="activity-stat-label">Prisustvo</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">12</div>
+                            <div class="activity-stat-label">Aktivnosti</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Card 2 -->
+                <div class="activity-card">
+                    <div class="activity-banner" style="background-image: url(https://www.codingem.com/wp-content/uploads/2021/10/juanjo-jaramillo-mZnx9429i94-unsplash-1024x683.jpg)">
+                        <span><i class="fas fa-laptop-code"></i> Programerska sekcija</span>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-details">
+                            <div class="activity-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Ponedjeljak, 16:00-17:30</span>
+                            </div>
+                            <div class="activity-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>IT Kabinet</span>
+                            </div>
+                        </div>
+                        <div class="activity-description">
+                            Programerska sekcija fokusira se na razvoj aplikacija, rješavanje problema i algoritama. Učestvujemo na različitim takmičenjima i hakathonima kroz godinu.
+                        </div>
+                        <div class="activity-actions">
+                            <button class="activity-button">
+                                <i class="fas fa-info-circle"></i> Detalji
+                            </button>
+                        </div>
+                        <br><br><br>
+                    </div>
+                    <div class="activity-stats">
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">18</div>
+                            <div class="activity-stat-label">Članova</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">92%</div>
+                            <div class="activity-stat-label">Prisustvo</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">8</div>
+                            <div class="activity-stat-label">Projekata</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Card 3 -->
+                <div class="activity-card">
+                    <div class="activity-banner" style="background-image: url(https://cas.stthomas.edu/_media-library/_images/history/1920x1080/stthomas-history-time.jpg);">
+                        <span><i class="fas fa-basketball-ball"></i> Historijska sekcija</span>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-details">
+                            <div class="activity-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Srijeda & Petak, 13:20-14:05</span>
+                            </div>
+                            <div class="activity-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Sportska dvorana</span>
+                            </div>
+                        </div>
+                        <div class="activity-description">
+                            Šahovska sekcija naše škole
+okuplja učenike koji žele da razvijaju
+strateško razmišljanje, takmičarski duh i ljubav prema ovoj drevnoj igri. Časovi se održavaju jednom sedmično utorkom
+                        </div>
+                        <div class="activity-actions">
+                            <button class="activity-button">
+                                <i class="fas fa-info-circle"></i> Detalji
+                            </button>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="activity-stats">
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">15</div>
+                            <div class="activity-stat-label">Članova</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">94%</div>
+                            <div class="activity-stat-label">Prisustvo</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-value">8</div>
+                            <div class="activity-stat-label">Utakmica</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+</body>
+</html>

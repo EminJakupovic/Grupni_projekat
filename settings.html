@@ -1,0 +1,211 @@
+<div class="settings-modal-header">
+    <h2><i class="fas fa-cog"></i> Postavke sistema</h2>
+    <button class="close-settings-modal"><i class="fas fa-times"></i></button>
+</div>
+<div class="settings-modal-content">
+    <div class="settings-tabs">
+        <div class="settings-tab active" data-tab="general">Općenito</div>
+        <div class="settings-tab" data-tab="display">Izgled</div>
+        <div class="settings-tab" data-tab="notifications">Obavještenja</div>
+        <div class="settings-tab" data-tab="privacy">Privatnost</div>
+    </div>
+    
+    <div class="settings-content">
+        <!-- Općenito postavke -->
+        <div class="settings-pane active" id="general-settings">
+            <div class="settings-section">
+                <h3>Korisnički račun</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Jezik</div>
+                    <div class="settings-item-control">
+                        <select class="settings-select">
+                            <option selected>Bosanski</option>
+                            <option>English</option>
+                            <option>Deutsch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Vremenska zona</div>
+                    <div class="settings-item-control">
+                        <select class="settings-select">
+                            <option selected>Sarajevo (GMT+1)</option>
+                            <option>London (GMT+0)</option>
+                            <option>New York (GMT-5)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Sigurnost</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Dvofaktorska autentifikacija</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Promjena lozinke</div>
+                    <div class="settings-item-control">
+                        <button class="settings-button">Promijeni</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Izgled postavke -->
+        <div class="settings-pane" id="display-settings">
+            <div class="settings-section">
+                <h3>Tema</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Tamni način rada</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Boja naglaska</div>
+                    <div class="settings-item-control">
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: #4361ee;"></div>
+                            <div class="color-option" style="background-color: #3a0ca3;"></div>
+                            <div class="color-option" style="background-color: #f72585;"></div>
+                            <div class="color-option" style="background-color: #4cc9f0;"></div>
+                            <div class="color-option" style="background-color: #4895ef;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Prikaz</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Veličina fonta</div>
+                    <div class="settings-item-control">
+                        <select class="settings-select">
+                            <option>Mali</option>
+                            <option selected>Srednji</option>
+                            <option>Veliki</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Kompaktni prikaz</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Obavještenja postavke -->
+        <div class="settings-pane" id="notifications-settings">
+            <div class="settings-section">
+                <h3>Email obavještenja</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Nove ocjene</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Nadolazeći testovi</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Školski eventi</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Push obavještenja</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Sve obavijesti</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Zvuk</div>
+                    <div class="settings-item-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Privatnost postavke -->
+        <div class="settings-pane" id="privacy-settings">
+            <div class="settings-section">
+                <h3>Privatnost profila</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Vidljivost profila</div>
+                    <div class="settings-item-control">
+                        <select class="settings-select">
+                            <option selected>Samo profesori</option>
+                            <option>Profesor i razred</option>
+                            <option>Škola</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Prikaži moje ocjene</div>
+                    <div class="settings-item-control">
+                        <select class="settings-select">
+                            <option selected>Samo ja</option>
+                            <option>Ja i roditelji</option>
+                            <option>Ja, roditelji i profesori</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Podatci</h3>
+                <div class="settings-item">
+                    <div class="settings-item-label">Preuzmi moje podatke</div>
+                    <div class="settings-item-control">
+                        <button class="settings-button">Preuzmi</button>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-label">Brisanje računa</div>
+                    <div class="settings-item-control">
+                        <button class="settings-button danger">Izbriši</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="settings-modal-footer">
+    <button class="settings-button cancel">Odustani</button>
+    <button class="settings-button primary">Spremi promjene</button>
+</div>
